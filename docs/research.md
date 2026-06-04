@@ -31,7 +31,7 @@
 
 ## Inputs
 
-- Requirement docs from the first-year students are kept in [student-artifacts/](student-artifacts/) — raw material for the questions above.
+- Initial thinking, ideas, and early requirement docs are kept in [artifacts/](../artifacts/) — raw material for the questions above.
 
 ## Reference Projects
 

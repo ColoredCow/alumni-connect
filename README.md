@@ -24,7 +24,7 @@ There's precedent: ColoredCow built **Yearbook**, a data-collection and filterin
 
 ## Current Status
 
-**Foundation phase.** We're laying down docs, structure, and open questions before writing application code. The first student cohort (CSE first-years) is currently paused for exams; work picks back up after.
+**Foundation phase.** We're laying down docs, structure, and open questions before writing application code.
 
 Deliberately undecided right now:
 
@@ -37,20 +37,20 @@ Deliberately undecided right now:
 ```
 README.md                  # You are here
 TEAM.md                    # Who owns which thread + who has contributed
+artifacts/                 # Initial thinking, ideas, early requirement docs
 docs/
   architecture.md          # System design thinking (stack TBD)
   process.md               # How we work — SDLC, GitHub flow, weekly cadence
   best-practices.md        # Conventions, ownership norms, commit/PR hygiene
   research.md              # Open questions — data sources, integrations
-  student-artifacts/       # Requirement docs from the first-years, kept as reference
 ```
 
-All documentation lives in `docs/`. The root stays clean so application code can live here later.
+Current decisions and documentation live in `docs/`. [artifacts/](artifacts/) holds initial thinking, ideas, and early requirement docs — kept as-is as part of the project's record, not updated to match later decisions. The root stays clean so application code can live here later.
 
 ## Team
 
 - ColoredCow — mentors
-- KEC students — the first cohort is CSE first-years; more join as the project grows
+- KEC students — the team grows as more people join
 
 ## Want to Contribute?
 

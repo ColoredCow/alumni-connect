@@ -43,7 +43,7 @@ Dates here are commitments, not estimates we quietly let slide.
 
 ### Milestones
 
-> **TODO:** target dates to be committed once the first-years are back from exams.
+> **TODO:** target dates to be committed.
 
 | Milestone | What it means | Target date | Owner |
 |---|---|---|---|
@@ -72,7 +72,7 @@ The project keeps moving; new contributors get on the bus while it's rolling. To
 3. Pick the smallest open item — a research question, a doc fix — and own it end to end.
 4. Post your first update in the weekly thread.
 
-You learn the project by contributing to it, not before contributing to it. The requirement docs in [student-artifacts/](student-artifacts/) show how earlier joiners started.
+You learn the project by contributing to it, not before contributing to it. The initial thinking and ideas in [artifacts/](../artifacts/) are worth a skim to see where the project started.
 
 ## Communication Channels
 
