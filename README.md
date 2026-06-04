@@ -1,6 +1,6 @@
 # Alumni Portal
 
-A platform to solve the fragmented alumni network problem starting with KEC (Kunwar's Engineering College), built as a scalable product for colleges and institutions.
+A platform to solve the fragmented alumni network problem starting with KEC (Kumoan Engineering College, now BTKIT), built as a scalable product for colleges and institutions.
 
 ## Project Vision
 
