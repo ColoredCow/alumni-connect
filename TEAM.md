@@ -14,7 +14,7 @@ Who's on the project. Two sections with two different rules:
 | Product thinking / architecture | What we're building and why; system design; keeping the three layers honest | Ashutosh & Sheeladitya |
 | Structure | Repo + docs organization, formatting, consistency | Vipul Yadav & Priyanshu Phulara |
 | Requirement / research | Data collection, existing-system integration, open questions, data sources | Ayush & Deepak |
-| Management / process | Timelines, milestones, V1/V2 sequencing, AI-first workflow, weekly update cadence | Ashutosh & Sujal |
+| Management / process | Timelines, milestones, V1/V2 sequencing, AI-first workflow, weekly update cadence | Ajay Singh Adhikari & Sujal |
 | Marketing / college relations | Story of the project; relationship with the college administration | Abhishek |
 
 Individual **tasks** within a thread still get one clear owner each (see [docs/process.md](docs/process.md)).
