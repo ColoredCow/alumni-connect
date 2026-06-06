@@ -60,3 +60,7 @@ So the same tool served a new graduating-25-years cohort every year.
 ## The lesson we take from it
 
 Start with data collection. An alumni network is only as good as its data — without records there's nothing to search, match, or connect. The Yearbook started from exactly that realization, and the same applies to us: get a small, concrete data-collection module shipped first, and everything else (directory, connections, even a booklet output) grows from there.
+
+## Reference Page from the IIT-Delhi Booklet
+<img width="330" height="330" alt="image" src="https://github.com/user-attachments/assets/195e5e79-3d1e-466c-b112-a258906d3602" />
+
