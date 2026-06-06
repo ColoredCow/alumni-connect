@@ -23,7 +23,7 @@ Each alumni page contained the fields below, grouped by how confident we are abo
 - **New photos** — recent life photos
 - **Character sketch** — a short blurb *about* the person (on the sample page: "He-man, hyper-enthu… started off shy…"). Note: this was written **by peers**, not the alumni themselves — so it's a different collection workflow from the self-authored fields above. **TODO:** decide who authors this.
 
-## Findings from IIT Delhi Yearbook Types
+## Extended Fields — IIT Delhi Yearbook
 
 - **Current role and company**
 - **College stories** — personal memories from their time at college
