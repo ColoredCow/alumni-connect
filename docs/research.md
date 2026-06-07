@@ -49,6 +49,12 @@
 - KEC founded 1992 — 30+ years of alumni across many domains
 - Opportunity to expand beyond KEC → other Uttarakhand colleges → other institutions
 
+## AI Integration Ideas (early thoughts, not commitments)
+
+- AI-assisted profile completion (suggest what to fill based on partial data)
+- Smart matching between students and relevant alumni mentors
+- Auto-categorization of alumni by domain/role from LinkedIn-style data
+
 ---
 
 # Why Does Our College Need an Alumni Portal?
