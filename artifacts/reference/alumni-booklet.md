@@ -1,11 +1,6 @@
-# Reference: The IIT Delhi Yearbook (ColoredCow)
+# The IIT Delhi Yearbook (ColoredCow)
 
-A reference writeup on how ColoredCow built the IIT Delhi alumni booklet ~8–9 years ago. Kept as background for our own data-collection module — the lessons here, not the specifics, are what carry over. See [architecture.md](../docs/architecture.md) and [research.md](../docs/research.md).
-
----
-
-<!-- Add yearbook sample page image here — drop the file into assets/ and update the path below -->
-<!-- ![IIT Delhi Yearbook sample page](../assets/iit-delhi-yearbook-sample.jpg) -->
+The story of the alumni booklet ColoredCow built for IIT Delhi ~8–9 years ago.
 
 ---
 
@@ -44,7 +39,7 @@ The tool became a one-time investment that paid off repeatedly. Each year the wo
 2. Clean it up.
 3. Start fresh data collection for the next batch hitting their 25-year mark.
 
-So the same tool served a new graduating-25-years cohort every year.
+So the same tool served a new batch reaching their 25-year mark every year.
 
 ## Scope: what it did and didn't do
 
@@ -54,13 +49,14 @@ So the same tool served a new graduating-25-years cohort every year.
 ## Status today
 
 - **Archived.** It ran in production for several years, then was retired.
-- The codebase is available and can be looked at as a starting point — what to reuse, what to leave.
-- **Important caveat:** it was built ~8–9 years ago, so there's no AI in it. It's a pre-AI piece of software. We're building AI-first, so it's a reference for the problem and approach, not a template to copy.
-
-## The lesson we take from it
-
-Start with data collection. An alumni network is only as good as its data — without records there's nothing to search, match, or connect. The Yearbook started from exactly that realization, and the same applies to us: get a small, concrete data-collection module shipped first, and everything else (directory, connections, even a booklet output) grows from there.
+- It was built ~8–9 years ago — a pre-AI piece of software, with no AI in it.
 
 ## Reference Page from the IIT-Delhi Booklet
-<img width="330" height="330" alt="image" src="https://github.com/user-attachments/assets/195e5e79-3d1e-466c-b112-a258906d3602" />
 
+A filled sample page from the booklet:
+
+![Filled sample page from the IIT Delhi Yearbook](yearbook-page-sample.png)
+
+The blank page-layout template behind it:
+
+![Blank page-layout template](yearbook-page-layout.png)

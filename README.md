@@ -38,6 +38,8 @@ Deliberately undecided right now:
 README.md                  # You are here
 TEAM.md                    # Who owns which thread + who has contributed
 artifacts/                 # Initial thinking, ideas, early requirement docs
+  requirement-notes/       # Each contributor's early take on the problem & purpose
+  reference/               # Prior art we learn from (e.g. ColoredCow's IIT Delhi Yearbook)
 docs/
   architecture.md          # System design thinking (stack TBD)
   process.md               # How we work — SDLC, GitHub flow, weekly cadence
