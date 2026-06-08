@@ -16,9 +16,18 @@ Every architecture decision gets checked against the three layers the project is
 
 ## Target Users
 
-- **Alumni** — maintain a profile, find batchmates, give back (mentorship, referrals, talks)
-- **Students** — discover and reach relevant alumni by branch, domain, company, batch
-- **Admin** — manage data, moderate content, run the platform for their institution
+All three user types below still matter, but for V1 they are **not equal**: the **college — the TPO / admin — is the primary user**, ahead of students and alumni. This prioritization is decided; whether it's feasible is not yet confirmed (see the note below).
+
+- **College / TPO (admin) — primary for V1.** Has a concrete, recurring need: keep alumni data in one place, use it to market the college ("our alumni are at X and Y"), connect with alumni to run workshops, and let the TPO reach companies and CEOs directly for placements. It replaces today's mess — scattered Google Forms, random personal QR codes for payments, alumni data spread across different people.
+- **Alumni** — maintain a profile, find batchmates, give back (mentorship, referrals, talks). Real value, but irregular use — not a daily-use audience.
+- **Students** — discover and reach relevant alumni by branch, domain, company, batch. A student who really wants to reach an alumnus can already do this on LinkedIn (filter by college), so a student-first portal adds little over what exists — the "connect" step is the same chat either way.
+
+**Why the college comes first**
+
+- **Dependency.** You can't start with students — students need alumni already on the platform to connect with. Alumni data has to come first, and the college is the route to that data.
+- **One platform, not three apps.** Don't model students and alumni as separate populations — the same person is a student today and an alumnus tomorrow. Treat student / alumni / college as roles (tags) on one platform.
+
+> **Note — decided, but feasibility pending.** The prioritization above is our decision. It rests on something we haven't verified: that the alumni data exists and that the college will share it. That discovery is tracked in [research.md](research.md). Until we know, treat "build for the college first" as our chosen direction, not a confirmed plan.
 
 ## Modules (proposed — V1 not finalized)
 
