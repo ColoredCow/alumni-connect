@@ -10,12 +10,19 @@
 
 ### Data — the questions that shape V1
 
-1. Where will the alumni data come from — what sources actually exist today? — **Open**
+1. Where will the alumni data come from — what sources actually exist today? — **Investigating** — the TPO visit (question 6) is the first step to establish this.
 2. Does the college already hold student/alumni data in an ERP or any existing system? — **Open**
 3. If an existing system holds the data, is integration with it possible — technically and politically? — **Open**
 4. Who uploads the data, and how — alumni self-serve, a student team doing data entry, the college/TPO handing over records? — **Open**
 5. Will the college share data, or will users upload it themselves? Is uploading actually easy for them? — **Open**
-6. What alumni data does the TPO already have, and will they share it? — **Open**
+6. What alumni data does the TPO already have, and will they share it? — **Investigating.** First concrete action: Abhishek visits the TPO this week to find out — making no assumptions — what data exists, what format it's in, and what the TPO's actual plan is. (Owner: Abhishek; timeframe: this week.)
+
+**Hypotheses about the state of the college's alumni data** — guesses to **test** on the TPO visit, not findings. We don't yet know which is true:
+
+- Data exists but is messy → hard to collect or use.
+- No data at all, and no plan for collecting it.
+- Data exists but is outdated (phone numbers / emails have changed).
+- Data exists but is scattered across multiple people or departments.
 
 ### Product & reference
 
