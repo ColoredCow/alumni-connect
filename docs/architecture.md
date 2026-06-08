@@ -49,6 +49,8 @@ Where alumni data actually comes from (ERP integration, TPO data, self-upload vs
 
 Built by ColoredCow ~8–9 years ago for IIT Delhi — data collection, filtering, and categorization with web + mobile data entry and hostel/branch filters. Archived, but the codebase is available and can be reused as a starting point for our data-collection module.
 
+See [alumni-booklet.md](../artifacts/reference/alumni-booklet.md) for the full story of what ColoredCow built.
+
 ## Tech Stack
 
 > **TODO:** not chosen. Will be decided alongside V1 scope. Constraints to evaluate against:
