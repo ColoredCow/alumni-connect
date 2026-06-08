@@ -46,7 +46,7 @@ V1 is anchored on the college (TPO / admin) as the primary user — see **Target
 - See the full alumni list; filter by year / session / branch.
 - Manually add new alumni — the TPO holds the records, especially for recent placements.
 - Send an invite link to an alumnus to create or update their own profile.
-- Search / filter alumni by year, name, or branch — including an agentic angle, e.g. a chat box: "give me all CSE alumni."
+- Search / filter alumni by year, name, or branch.
 
 **Why data collection first:** the network is only as good as its data — without profiles there is nothing to search, match, or connect. Same lesson as the IIT Delhi Yearbook tool: start with data collection, everything else grows from there.
 
