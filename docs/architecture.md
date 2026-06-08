@@ -33,13 +33,26 @@ All three user types below still matter, but for V1 they are **not equal**: the 
 
 > **TODO:** V1 scope is not locked. This list is current thinking, not a commitment. The V1/V2/V3 split below is a working sketch.
 
+V1 is anchored on the college (TPO / admin) as the primary user — see **Target Users** above. The modules below are framed around what the college needs first.
+
 - **Data Collection (likely V1, and the proof-of-concept module)** — onboarding alumni, collecting profile info
 - **Alumni Directory (likely V1)** — search/filter by branch, batch, company, domain
 - **Student–Alumni Connect (later)** — messaging, mentorship requests
 - **Admin Dashboard (later)** — manage entries, moderate content
 - **Yearbook / Book Export (later)** — generate printable alumni booklet (like IIT Delhi)
 
+**What the TPO can do in V1 (proposed):**
+
+- See the full alumni list; filter by year / session / branch.
+- Manually add new alumni — the TPO holds the records, especially for recent placements.
+- Send an invite link to an alumnus to create or update their own profile.
+- Search / filter alumni by year, name, or branch — including an agentic angle, e.g. a chat box: "give me all CSE alumni."
+
 **Why data collection first:** the network is only as good as its data — without profiles there is nothing to search, match, or connect. Same lesson as the IIT Delhi Yearbook tool: start with data collection, everything else grows from there.
+
+> **TODO — still open:**
+> - Which users are in V1 — college only, or college + alumni + students together? (Undecided — students may be out of V1.)
+> - Verification — how do we confirm someone is actually a KEC alumnus?
 
 ## System Design
 
@@ -48,11 +61,19 @@ All three user types below still matter, but for V1 they are **not equal**: the 
 - **Data model** — what an alumni profile is; college-agnostic from the start (see research question on a generic data model)
 - **High-level components** — data entry (web + mobile), storage, search/filtering, admin
 - **AI inside the product** — where AI features plug in (early ideas in [research.md](research.md))
-- **Multi-college / multi-tenant thinking** — how one deployment serves many institutions later, without over-engineering V1
+- **Multi-college / multi-tenant thinking** — how one deployment serves many institutions later, without over-engineering V1. Direction: the same codebase with a separate database per college; college-specific things — name, logos, branding, config — come from the database / config, never hardcoded. BTKIT / KEC is the first customer, not the only one.
 
 ## Data Sources
 
 Where alumni data actually comes from (ERP integration, TPO data, self-upload vs. data entry) is an open question, tracked in [research.md](research.md). The answer shapes the data-collection module, so research feeds architecture directly.
+
+**Candidate approaches for getting the first records in** — options under consideration, pending the TPO discovery in [research.md](research.md). None is decided:
+
+- TPO adds alumni manually.
+- TPO sends invite links → alumni self-create their profiles.
+- Seed the database by extracting from existing Excel sheets / registers.
+- Current students as the initial seed — student emails are already being collected across years (a record of ~300 up to second year is on its way; the current session's data will be completed via the college). The easy first entries are current students who later become alumni; the hard part is old / historical alumni.
+- A batch-email feature so the TPO can invite a whole batch at once.
 
 ## Reference: Yearbook (IIT Delhi)
 
