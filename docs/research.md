@@ -55,9 +55,9 @@
 - Smart matching between students and relevant alumni mentors
 - Auto-categorization of alumni by domain/role from LinkedIn-style data
 
-## Use Cases — Why a Portal Over the Status Quo
+## Use Cases — Why a Portal Over Scattered Tools
 
-These are the value propositions we expect a portal to deliver for each group, set against today's status quo of scattered Google Forms and WhatsApp groups. They are working hypotheses to validate against the open questions above — not yet verified findings.
+These are the benefits we expect a portal to provide for each group, compared with how things work today — scattered Google Forms and WhatsApp groups. They are working hypotheses to validate against the open questions above — not yet verified findings.
 
 ### For the college
 
