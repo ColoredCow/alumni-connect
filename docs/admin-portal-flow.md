@@ -27,57 +27,57 @@ V1 is anchored on the college (TPO / admin) as the primary user. So the admin po
 
 ## The admin flow at a glance
 
+> The diagram below is meant to stand on its own — read it top to bottom and you have the whole admin flow. The sections that follow are reference detail, only needed if you want the specifics of one step.
+
 ```mermaid
 flowchart TD
-    Creds[/Credentials provided<br/>by research team/] -.-> Login
-    Start([Admin opens portal]) --> Login[Login / Authenticate]
-    Login --> RoleCheck{Account role?}
-    RoleCheck -->|Student / Alumni| UserView[Student / Alumni view<br/>out of scope here]
-    RoleCheck -->|Admin| FirstTime{College already<br/>set up?}
+    legend[["How to read · top to bottom · solid = main path · dashed = note or outcome · V1 = first release"]]
 
-    FirstTime -->|No, first time| Setup[College Setup<br/>one-time, editable later]
-    FirstTime -->|Yes| Dashboard
-
-    subgraph SETUP [College Setup -V1-]
+    subgraph ACCESS ["1 · Access (V1)"]
         direction TB
-        Setup --> Identity[2a. Identity & details<br/>name, about, location, contact]
-        Identity --> Images[2b. Images & branding<br/>logo, banner, photo gallery]
-        Images --> Academic[2c. Academic config<br/>branches, session/batch format]
-        Academic --> SaveSetup[Save]
+        Prov[/"Research team provisions the college<br/>and creates the admin account"/]
+        Prov --> Hand[/"Login credentials handed to the admin<br/>(admins do NOT self-register)"/]
+        Hand --> Login["Admin logs in at the portal"]
     end
 
-    SaveSetup --> Dashboard[Dashboard<br/>counts + quick actions]
+    Login --> SetupCheck{"First login?"}
 
-    Dashboard --> ManageAlumni[Manage Alumni records]
-    Dashboard --> ManageStudents[Manage Student records]
-
-    subgraph ALUMNI [Manage Alumni -V1-]
+    subgraph SETUP ["2 · College setup (V1 · one-time · editable later)"]
         direction TB
-        ManageAlumni --> AList[View list]
-        AList --> AActions{Action}
-        AActions --> AAdd[Add alumnus<br/>partial data OK]
-        AActions --> AInvite[Send invite link]
-        AActions --> ABatch[Batch invite<br/>whole year/session]
-        AActions --> ASearch[Search / filter]
-        AActions --> AEdit[Open & edit record]
+        Identity["Identity & details<br/>name, about, location, contact"]
+        Identity --> Images["Images & branding<br/>logo, banner, photo gallery<br/>(makes the college look good to applicants)"]
+        Images --> Academic["Academic config<br/>branches + session / batch format<br/>(drives every dropdown & filter)"]
     end
 
-    subgraph STUDENTS [Manage Students -V1-]
+    SetupCheck -->|"yes, first time"| Identity
+    SetupCheck -->|"no"| Dashboard
+    Academic --> Dashboard
+
+    Dashboard["3 · Dashboard<br/>alumni count · student count · quick actions"]
+    Dashboard --> Manage
+
+    subgraph MANAGE ["4 · Manage records (V1) — same actions for alumni & students"]
         direction TB
-        ManageStudents --> SList[View list]
-        SList --> SActions{Action}
-        SActions --> SAdd[Add student<br/>partial data OK]
-        SActions --> SInvite[Send invite link]
-        SActions --> SBatch[Batch invite<br/>whole year/session]
-        SActions --> SSearch[Search / filter]
-        SActions --> SEdit[Open & edit record]
+        Manage["Open Alumni list  or  Student list"]
+        Manage --> Actions{"Pick an action"}
+        Actions --> Add["Add a record by hand<br/>(partial data is OK)"]
+        Actions --> Invite["Send invite link<br/>(person fills / updates own profile)"]
+        Actions --> Batch["Batch invite a whole year / session"]
+        Actions --> Search["Search / filter<br/>by year, branch, company, city"]
+        Actions --> Edit["Open & edit a record"]
     end
 
-    AInvite -.->|alumnus claims profile| Claimed[Status: profile claimed]
-    SInvite -.->|student claims profile| Claimed
-    ABatch -.-> Claimed
-    SBatch -.-> Claimed
-    SList -.->|batch / session completes| Transition[Student auto-becomes Alumnus]
+    Invite -.->|"person completes profile"| Claimed[/"Status: profile claimed"/]
+    Batch -.-> Claimed
+    Edit -.->|"when the batch / session completes"| Auto[/"Student automatically<br/>becomes an Alumnus"/]
+    Dashboard -.->|"later, not in V1"| Later[/"Later: verification · moderation<br/>events · analytics · exports"/]
+
+    classDef note fill:#fff3cd,stroke:#e0a800,color:#000;
+    classDef later fill:#eeeeee,stroke:#999999,color:#555555;
+    classDef legendbox fill:#e7f1ff,stroke:#4a90d9,color:#000;
+    class Prov,Hand,Claimed,Auto note;
+    class Later later;
+    class legend legendbox;
 ```
 
 <details>
@@ -107,15 +107,16 @@ flowchart TD
 
 ## 1. Login / Authentication **[V1]**
 
-The admin lands on a single login screen (one login surface for all roles — the role is determined by the account, not a separate admin URL we advertise).
+The admin logs in and lands in the admin area.
 
 **Flow:**
 
-1. Admin opens the portal URL.
-2. Enters credentials and authenticates.
-3. System checks the account's role; if it is an admin for this college, the admin dashboard loads. Otherwise the student/alumni view loads.
+1. Admin opens the portal URL and logs in with the credentials provided by the research team.
+2. **First login** → the admin completes College setup (§2). **Later logins** → straight to the dashboard.
 
-> **Admin credentials — decided.** Admins do **not** self-register. For V1, the admin's login credentials are **provided by the research team**, who provision each college and its admin account. The admin logs in with those credentials and then completes College setup (§2). (The student / alumni signup path is separate and out of scope here.)
+> **Onboarding & credentials — decided.** Colleges are **not** self-registered and admins do **not** sign themselves up. For V1, the research team **provisions each college and creates its admin account**, then hands the login credentials to the admin. Self-service college registration is a later, multi-college concern — out of V1.
+
+> **Note — one login, all roles.** There is a single login surface for everyone (students, alumni, admins); the system routes each account to the right view based on its role. That role-routing is a general auth concern — this doc follows only the admin path, so it isn't drawn in the flow above.
 
 > **TODO — open (feeds the stack decision, see [research.md](research.md) Q11):** Auth method not decided. Candidates:
 > - Google SSO (simple, most people have Google accounts).
