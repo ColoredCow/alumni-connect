@@ -66,10 +66,10 @@ flowchart TD
         Actions --> Edit["Open & edit a record"]
     end
 
-    Invite -.->|"profile completed"| Claimed["Status: profile claimed"]
+    Invite -.->|"profile completed"| Claimed["Status:<br/>profile claimed"]
     Batch -.-> Claimed
-    Manage -.->|"on batch / session completion"| Auto["Student automatically becomes an Alumnus"]
-    Dashboard -.->|"later, not in V1"| Later["Later: verification · moderation · events · analytics · exports"]
+    Manage -.->|"on batch completion"| Auto["Student automatically<br/>becomes an Alumnus"]
+    Dashboard -.->|"later, not in V1"| Later["Later (not in V1):<br/>verification<br/>moderation<br/>events<br/>analytics<br/>exports"]
 
     classDef title fill:#4a90d9,stroke:#2c5aa0,color:#ffffff;
     classDef note fill:#fff3cd,stroke:#e0a800,color:#000000;
