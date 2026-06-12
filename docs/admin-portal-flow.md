@@ -19,7 +19,7 @@ V1 is anchored on the college (TPO / admin) as the primary user. So the admin po
 |---|---|---|
 | **Admin** | The college / TPO or a college-appointed person who runs the portal | Sets up the college; manages student and alumni records; invites people; (later) verification, events, moderation |
 | **Alumni** | A former student | Maintains their own profile, appears in the directory, gives back |
-| **Student** | A current student | Maintains their own profile; becomes an alumnus after graduation |
+| **Student** | A current student | Maintains their own profile; automatically becomes an alumnus when their batch / session completes |
 
 > Student and alumni are **roles**, not separate populations — the same person is a student today and an alumnus tomorrow. The admin manages both from one place. This doc covers the **admin** flow only; the student and alumni flows are separate.
 
@@ -76,7 +76,7 @@ flowchart TD
     SInvite -.->|student claims profile| Claimed
     ABatch -.-> Claimed
     SBatch -.-> Claimed
-    SEdit -.->|graduation| Transition[Student becomes Alumnus<br/>TODO: how?]
+    SList -.->|batch / session completes| Transition[Student auto-becomes Alumnus]
 ```
 
 <details>
@@ -256,7 +256,7 @@ So the admin doesn't send links one by one. Invite an entire batch/session (or y
 
 **Edit a record:** open it → view full profile, status, and how it was created/updated (admin-added vs. self-claimed) → edit any field → save. Also: re-send invite, or (TODO) archive/soft-delete.
 
-> **Note — the student→alumni transition.** A student becomes an alumnus after graduation. **TODO — open:** is this an admin action, automatic on session end, or a status flag on one shared person record? This decides whether "students" and "alumni" are two lists over one underlying record or two record sets. Resolve with the data model.
+> **Note — the student→alumni transition (decided).** A student **automatically becomes an alumnus when their batch / session completes** — there is no manual admin step. The session end configured in College setup (§2c) drives it. This implies **one underlying person record whose role flips on session completion**, with "students" and "alumni" being two views over the same records rather than two separate record sets. **TODO:** confirm the exact trigger when the data model is finalized — session end date alone, or an admin "promote batch" confirmation as a safety check.
 
 ---
 
@@ -312,6 +312,6 @@ These live in [research.md](research.md) — listed here so the dependency is ex
 2. What data does the TPO already hold, in what format, and will they share it? — **Investigating**.
 3. Authentication method — Google SSO vs. college email vs. OTP — **Open**.
 4. Verification approach — **Open**.
-5. The college-agnostic data model, and how the student→alumni transition works — **Open**.
+5. The college-agnostic data model (which fields, what's required) — **Open**. _(The student→alumni transition itself is decided: automatic on batch/session completion — see §4e.)_
 
 > When any of these is answered, update the relevant section above and remove its `TODO`.
