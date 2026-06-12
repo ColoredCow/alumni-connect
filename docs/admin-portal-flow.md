@@ -27,6 +27,61 @@ V1 is anchored on the college (TPO / admin) as the primary user. So the admin po
 
 ## The admin flow at a glance
 
+```mermaid
+flowchart TD
+    Start([Admin opens portal]) --> Login[Login / Authenticate]
+    Login --> RoleCheck{Account role?}
+    RoleCheck -->|Student / Alumni| UserView[Student / Alumni view<br/>out of scope here]
+    RoleCheck -->|Admin| FirstTime{College already<br/>set up?}
+
+    FirstTime -->|No, first time| Setup[College Setup<br/>one-time, editable later]
+    FirstTime -->|Yes| Dashboard
+
+    subgraph SETUP [College Setup -V1-]
+        direction TB
+        Setup --> Identity[2a. Identity & details<br/>name, about, location, contact]
+        Identity --> Images[2b. Images & branding<br/>logo, banner, photo gallery]
+        Images --> Academic[2c. Academic config<br/>branches, session/batch format]
+        Academic --> SaveSetup[Save]
+    end
+
+    SaveSetup --> Dashboard[Dashboard<br/>counts + quick actions]
+
+    Dashboard --> ManageAlumni[Manage Alumni records]
+    Dashboard --> ManageStudents[Manage Student records]
+
+    subgraph ALUMNI [Manage Alumni -V1-]
+        direction TB
+        ManageAlumni --> AList[View list]
+        AList --> AActions{Action}
+        AActions --> AAdd[Add alumnus<br/>partial data OK]
+        AActions --> AInvite[Send invite link]
+        AActions --> ABatch[Batch invite<br/>whole year/session]
+        AActions --> ASearch[Search / filter]
+        AActions --> AEdit[Open & edit record]
+    end
+
+    subgraph STUDENTS [Manage Students -V1-]
+        direction TB
+        ManageStudents --> SList[View list]
+        SList --> SActions{Action}
+        SActions --> SAdd[Add student<br/>partial data OK]
+        SActions --> SInvite[Send invite link]
+        SActions --> SBatch[Batch invite<br/>whole year/session]
+        SActions --> SSearch[Search / filter]
+        SActions --> SEdit[Open & edit record]
+    end
+
+    AInvite -.->|alumnus claims profile| Claimed[Status: profile claimed]
+    SInvite -.->|student claims profile| Claimed
+    ABatch -.-> Claimed
+    SBatch -.-> Claimed
+    SEdit -.->|graduation| Transition[Student becomes Alumnus<br/>TODO: how?]
+```
+
+<details>
+<summary>Text version of the same flow</summary>
+
 ```
         Login  ──►  College setup ──►  Dashboard
           │          (one-time)          │
@@ -44,6 +99,8 @@ V1 is anchored on the college (TPO / admin) as the primary user. So the admin po
           │                              ├─► Insights / analytics           [Later]
           │                              └─► Exports (booklet/CSV)          [Later]
 ```
+
+</details>
 
 ---
 
