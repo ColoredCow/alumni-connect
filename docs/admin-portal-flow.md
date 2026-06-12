@@ -66,8 +66,10 @@ flowchart TD
         Actions --> Edit["Open & edit a record"]
     end
 
-    Invite -.->|"profile completed"| Claimed["Status:<br/>profile claimed"]
-    Batch -.-> Claimed
+    Invite -.->|"person fills in details"| Review["Admin reviews<br/>the submitted details"]
+    Batch -.-> Review
+    Review -.->|"approve"| Claimed["Status:<br/>profile live"]
+    Actions -.->|"which details to collect?"| Fields["Exact details / fields:<br/>not decided yet —<br/>pending research"]
     Manage -.->|"on batch completion"| Auto["Student automatically<br/>becomes an Alumnus"]
     Dashboard -.->|"later, not in V1"| Later["Later (not in V1):<br/>verification<br/>moderation<br/>events<br/>analytics<br/>exports"]
 
@@ -75,7 +77,7 @@ flowchart TD
     classDef note fill:#fff3cd,stroke:#e0a800,color:#000000;
     classDef later fill:#eeeeee,stroke:#999999,color:#555555;
     class Title title;
-    class AccessNote,Claimed,Auto note;
+    class AccessNote,Claimed,Auto,Fields note;
     class Later later;
 ```
 
@@ -199,7 +201,7 @@ The actions below apply to **both** alumni and student records (the fields diffe
 
 **Student row (indicative):** name · branch · current year/semester · session · contact-on-file · status.
 
-> **TODO:** exact field set is part of the data-model work (see [architecture.md](architecture.md) → System Design → Data model, and [research.md](research.md) Q10 on a college-agnostic data model).
+> **The exact details / fields are not decided yet — pending research.** The field lists shown here and below are *indicative only*. The real set is part of the data-model / research work (see [architecture.md](architecture.md) → System Design → Data model, and [research.md](research.md) Q10 on a college-agnostic data model).
 
 ### 4b. Add a record (manual entry)
 
@@ -230,12 +232,15 @@ The admin holds the records; the person fills in the detail and keeps it current
 1. From a record (or the Add flow), click **Send invite**.
 2. System generates a unique invite link tied to that record (so their submission updates *that* record, not a new duplicate).
 3. Link is sent by email and/or shown for the admin to share over any channel.
-4. The person opens the link → profile create/update form → submits.
-5. Record status moves *invited* → *profile claimed*; the admin sees the updated data.
+4. The person opens the link → profile create/update form → submits **their details**.
+5. **Admin review (decided).** Submitted details do **not** go live automatically — they land in an admin review step. The admin checks the details and **approves** (or sends back for changes). Only on approval does the profile go **live**.
+6. Record status moves *invited* → *submitted* → (on approval) *live*.
+
+> **What the admin reviews — pending research.** The exact details collected from students/alumni, and therefore what the admin checks, are **not decided yet** — this depends on the data-model / research work (see §4a and [research.md](research.md)). The flow (submit → admin review → live) is decided; the field list is not.
 
 > **TODO — open:**
 > - Link expiry / single-use vs. reusable?
-> - Does a claimed profile go live immediately, or wait for admin review? (Ties to verification, **[Later]** §5.)
+> - How heavy is the review — a quick glance, or full verification of proof? (Full verification is **[Later]** §5; V1 review is the lightweight approve/send-back above.)
 
 ### 4d. Batch invite — invite a whole group at once
 
