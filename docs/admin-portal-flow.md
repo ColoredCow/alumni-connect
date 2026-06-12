@@ -29,6 +29,7 @@ V1 is anchored on the college (TPO / admin) as the primary user. So the admin po
 
 ```mermaid
 flowchart TD
+    Creds[/Credentials provided<br/>by research team/] -.-> Login
     Start([Admin opens portal]) --> Login[Login / Authenticate]
     Login --> RoleCheck{Account role?}
     RoleCheck -->|Student / Alumni| UserView[Student / Alumni view<br/>out of scope here]
@@ -113,6 +114,8 @@ The admin lands on a single login screen (one login surface for all roles — th
 1. Admin opens the portal URL.
 2. Enters credentials and authenticates.
 3. System checks the account's role; if it is an admin for this college, the admin dashboard loads. Otherwise the student/alumni view loads.
+
+> **Admin credentials — decided.** Admins do **not** self-register. For V1, the admin's login credentials are **provided by the research team**, who provision each college and its admin account. The admin logs in with those credentials and then completes College setup (§2). (The student / alumni signup path is separate and out of scope here.)
 
 > **TODO — open (feeds the stack decision, see [research.md](research.md) Q11):** Auth method not decided. Candidates:
 > - Google SSO (simple, most people have Google accounts).
