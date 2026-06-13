@@ -21,6 +21,7 @@ All project communication happens in the `#alumni-connect` Google Chat channel. 
 ---
 
 ## PR Description Format
+whenever creating any PR must follow a standard of PR description and for example you can use this format as well:
 
 ```
 Closes #<issue-number>
