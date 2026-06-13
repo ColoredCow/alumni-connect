@@ -1,4 +1,6 @@
-# Communication Process
+# Team
+
+## How Team Communication Will Be Done
 
 All project communication happens in the `#alumni-connect` Google Chat channel. Posting is not optional.
 
