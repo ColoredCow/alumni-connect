@@ -1,6 +1,6 @@
 # Architecture
 
-> Living document. Nothing here is final — the tech stack is not chosen and the V1 feature set is not locked. `TODO` marks what's open. Update this as decisions are made.
+> Living document. `TODO` marks what is still open. Update this as decisions are made.
 
 ## Problem Statement
 
@@ -56,12 +56,34 @@ V1 is anchored on the college (TPO / admin) as the primary user — see **Target
 
 ## System Design
 
-> **TODO:** placeholder — to be filled once the data-collection module is scoped and the stack is chosen. Expected sections:
+> **TODO:** Data model and high-level component diagrams to be filled once V1 scope is locked. Multi-tenancy strategy and AI insertion points are decided below.
 
-- **Data model** — what an alumni profile is; college-agnostic from the start (see research question on a generic data model)
-- **High-level components** — data entry (web + mobile), storage, search/filtering, admin
-- **AI inside the product** — where AI features plug in (early ideas in [research.md](research.md))
-- **Multi-college / multi-tenant thinking** — how one deployment serves many institutions later, without over-engineering V1. Direction: the same codebase with a separate database per college; college-specific things — name, logos, branding, config — come from the database / config, never hardcoded. BTKIT / KEC is the first customer, not the only one.
+### Multi-college / multi-tenant
+
+One codebase serves many colleges. Each college gets its own subdomain (`kec.app`, `gbu.app`), its own database, and its own config (name, logo, colours, SMTP) — nothing is hardcoded to KEC.
+
+**Migration path — start simple, scale when needed:**
+
+| Stage | Strategy |
+|---|---|
+| V1 — KEC alone | Single shared database with a `college_id` column. Zero operational overhead. |
+| 3–10 colleges | Switch to database-per-college using `stancl/tenancy`. Same codebase, same package — config change only. |
+| 100+ colleges | Horizontal database sharding across servers. Far future. |
+
+Tenant routing is subdomain-based. Per-college config (branding, SMTP, feature flags) lives in the tenant's database record, never in code.
+
+### AI insertion points (future — not V1)
+
+AI is out of V1 scope but the stack is chosen to make it straightforward to add later:
+
+| Feature | How it plugs in |
+|---|---|
+| Profile auto-completion | Laravel job → LLM API call via Laravel Prism |
+| Alumni–student matching | Profile embeddings stored in PostgreSQL via pgvector → similarity query |
+| Natural language search | Query → LLM → SQL/vector search → results |
+| Yearbook PDF export | Queued Laravel job → DomPDF/Snappy (no AI needed) |
+
+All of this runs inside the existing Laravel app — no separate Python service, no new infrastructure.
 
 ## Data Sources
 
@@ -83,9 +105,76 @@ See [alumni-booklet.md](../artifacts/reference/alumni-booklet.md) for the full s
 
 ## Tech Stack
 
-> **TODO:** not chosen. Will be decided alongside V1 scope. Constraints to evaluate against:
+**Decided.** The stack below is the result of research across six dimensions: frontend performance on low-end devices and slow networks (the primary constraint for Tier 2/3 college TPOs), admin/CRUD tooling maturity (V1 is an admin tool first), multi-tenancy operational simplicity, hosting cost in the Indian context, AI-readiness for the future roadmap, and mentorability for a junior team.
 
-- Keep it simple for V1
-- Should support web + mobile data entry
-- AI integration considered from day one (inside the product, not just in the process)
-- Generic / configurable — nothing that locks us to KEC
+### Backend — Laravel (PHP)
+
+Laravel is the application framework. It handles routing, business logic, authentication, queues, background jobs, email, and API endpoints. The ORM is Eloquent (built in — no separate layer needed). Multi-tenancy runs via the `stancl/tenancy` package, which supports both shared-DB and DB-per-tenant strategies from the same codebase.
+
+**Why Laravel over Django:** ColoredCow has shipped both (Plio on Django + Vue, IAGES on Laravel). The decisive factors for this product are:
+- `stancl/tenancy` is more flexible than `django-tenants` — supports both shared DB and DB-per-tenant, switchable without a rewrite. `django-tenants` locks you to PostgreSQL schema-per-tenant from day one.
+- Filament (see below) has no equivalent in the Django ecosystem for product-grade admin UIs.
+- Laravel runs on shared PHP hosting — cheapest entry point for a college-budget product in India.
+
+### Admin panel — Filament v5
+
+Filament is built on top of Laravel + Livewire + Alpine.js + Tailwind CSS. It ships tables, forms, filters, bulk actions, modals, and a dashboard shell — all defined in PHP, zero JavaScript to write. V1's TPO-facing interface is essentially Filament wired to the alumni data models.
+
+**UI quality:** Filament's default look is clean and functional but recognisable. Apply the [shadcn theme for Filament](https://filamentphp.com/plugins/openplain-shadcn-theme) or [Aura UI](https://aura-ui.com/filament) (8 modern presets including glassmorphism, midnight dark, minimal) to match 2026 SaaS product aesthetics. Full dark mode is built in.
+
+### Frontend for user-facing pages — Svelte 5 + Inertia.js
+
+The TPO admin panel runs on Filament. Alumni and student-facing pages (profile creation, invite landing, public directory, messaging) use Svelte 5 via Inertia.js — Laravel's officially supported Svelte starter kit shipped February 2026.
+
+Svelte ships 15–40 KB of JavaScript (vs React's 70–130 KB), compiles to vanilla JS at build time, and uses the shadcn-svelte + Tailwind CSS design system — the same visual language as modern SaaS products. It runs well on low-end devices and older browsers. Inertia.js means there is no separate API — Svelte components talk directly to Laravel controllers.
+
+```
+TPO admin panel            →  Filament + Livewire  (data-dense, CRUD-optimised)
+Alumni / student pages     →  Svelte 5 + Inertia   (product-grade, lightweight)
+Real-time chat / notifs    →  Laravel Reverb        (self-hosted WebSockets)
+```
+
+All three run inside the same Laravel application. One deployment.
+
+### Real-time — Laravel Reverb
+
+Reverb is Laravel's first-party, self-hosted WebSocket server. It powers real-time notifications, direct messaging, and live feed updates. A single instance handles ~1,000 concurrent connections per CPU core; scales horizontally with Redis pub/sub. No per-message billing (unlike Pusher or Ably). This is the foundation for LinkedIn-like interactions in later milestones.
+
+### Database — PostgreSQL
+
+PostgreSQL is chosen over MySQL for one forward-looking reason: the `pgvector` extension lets you store and query AI embeddings natively without adding a separate vector database. This is the direct path to alumni matching, natural language search, and profile completion in future milestones. Standard relational features (indexes, constraints, full-text search) cover everything V1 needs.
+
+### AI — Laravel Prism (future, not V1)
+
+Laravel Prism is a provider-agnostic LLM integration layer supporting 14 providers (OpenAI, Anthropic, Gemini, Groq, etc.) with automatic failover. It runs inside the existing Laravel app — no Python microservice, no new infrastructure. Combined with pgvector on PostgreSQL, it covers the full AI roadmap: embeddings, matching, completion, and natural language search.
+
+### Full picture
+
+```
+Browser (TPO laptop / alumni phone)
+         │  Filament: ~40 KB JS   /   Svelte pages: 15–40 KB JS
+         ▼
+  Filament + Livewire + Blade       Svelte 5 + Inertia.js
+  (admin panel — TPO)               (user pages — alumni, students)
+         │                                    │
+         └──────────────┬─────────────────────┘
+                        ▼
+                 Laravel (PHP)
+         routing · auth · business logic
+         queues · jobs · email · Reverb
+         stancl/tenancy (college routing)
+                        │
+                        ▼
+                  PostgreSQL
+          alumni data · college config
+          pgvector (AI embeddings later)
+```
+
+### Constraints this stack was evaluated against
+
+- **Low-end devices and old browsers** — Filament's reduced JS bundle and Svelte's compiled 15–40 KB output both work on weak hardware and slow networks. No heavy SPA framework shipped to the client.
+- **Multi-tenancy** — `stancl/tenancy` is the 2026 production standard, used by thousands of SaaS platforms. Start with shared DB, graduate to DB-per-college when needed, same package.
+- **V1 simplicity** — Filament means the TPO admin panel is days of work, not weeks. No frontend build complexity for V1.
+- **Hosting cost** — PHP runs on shared hosting anywhere in India. Hostinger VPS from ~₹400/month covers a multi-college early deployment.
+- **AI-readiness** — Laravel Prism + pgvector covers the full AI roadmap without a separate service.
+- **Scalability** — same stack has run real-time social platforms, SaaS products at hundreds of thousands of users, and multi-tenant systems with 1,000+ tenants in production.
