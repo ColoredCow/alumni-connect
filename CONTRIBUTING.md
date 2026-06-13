@@ -12,7 +12,7 @@ All project communication happens in the `#alumni-connect` Google Chat channel. 
 | Issue completed | Assignee | Issue link + one line on outcome |
 | Blocker hit | Anyone | What's blocked, why, what's needed |
 | Key decision made | Decision owner | What was decided and why (link to issue/doc) |
-| Saturday sync | Ajay | Agenda posted Friday, notes posted Saturday after |
+| Saturday sync | Ajay & Sujal | Agenda posted Friday, notes posted Saturday after |
 
 **Rules:**
 - Keep it short — one to two lines max per update
